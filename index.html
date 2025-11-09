@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patofisiologi Ko-infeksi Varisela dan Tinea Pedis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8edf2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 6px solid #4f46e5;
+        }
+
+        .header h1 {
+            color: #1f2937;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .timeline-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-header h2 {
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            color: #4f46e5;
+        }
+
+        .phase-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .phase-btn {
+            padding: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .phase-btn:hover {
+            border-color: #9ca3af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .phase-btn.active-acute {
+            background: #fef2f2;
+            border-color: #ef4444;
+            box-shadow: 0 4px 12px rgba(239,68,68,0.2);
+        }
+
+        .phase-btn.active-peak {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.2);
+        }
+
+        .phase-btn.active-window {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            box-shadow: 0 4px 12px rgba(245,158,11,0.2);
+        }
+
+        .phase-btn-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .phase-btn-time {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .panel h3 {
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            background: linear-gradient(to right, #eff6ff, white);
+            margin-bottom: 15px;
+        }
+
+        .chart-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-graph {
+            position: relative;
+            height: 100px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .chart-bars {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 10px;
+        }
+
+        .chart-bar {
+            width: 28%;
+            background: #d1d5db;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.5s ease;
+        }
+
+        .chart-bar.bar1-active { background: #60a5fa; height: 33%; }
+        .chart-bar.bar2-active { background: #34d399; height: 85%; }
+        .chart-bar.bar3-active { background: #ef4444; height: 25%; }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .status-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            background: linear-gradient(to right, #f5f3ff, white);
+        }
+
+        .status-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #4b5563;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-dot.green { background: #10b981; }
+        .status-dot.red { background: #ef4444; }
+
+        .clinical-box {
+            border: 2px solid #fecaca;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fef2f2;
+            margin-bottom: 15px;
+        }
+
+        .clinical-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .clinical-list {
+            list-style: none;
+            font-size: 12px;
+            color: #374151;
+        }
+
+        .clinical-list li {
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .clinical-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+
+        .tinea-box {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f9fafb;
+            transition: all 0.3s ease;
+        }
+
+        .tinea-box.warning {
+            border-color: #fbbf24;
+            background: #fffbeb;
+        }
+
+        .alert-box {
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fef3c7;
+            display: none;
+            animation: pulse 2s infinite;
+        }
+
+        .alert-box.show {
+            display: flex;
+            gap: 10px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .alert-icon {
+            width: 20px;
+            height: 20px;
+            color: #d97706;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #92400e;
+            margin-bottom: 5px;
+        }
+
+        .alert-text {
+            font-size: 12px;
+            color: #78350f;
+            line-height: 1.5;
+        }
+
+        .mechanism-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .mechanism-section h3 {
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .mechanism-card {
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .mechanism-card.blue {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+        }
+
+        .mechanism-card.green {
+            border: 1px solid #bbf7d0;
+            background: #f0fdf4;
+        }
+
+        .mechanism-card.amber {
+            border: 1px solid #fde68a;
+            background: #fffbeb;
+        }
+
+        .mechanism-card-title {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .mechanism-card.blue .mechanism-card-title { color: #1e3a8a; }
+        .mechanism-card.green .mechanism-card-title { color: #14532d; }
+        .mechanism-card.amber .mechanism-card-title { color: #78350f; }
+
+        .mechanism-card-text {
+            font-size: 12px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .key-mechanisms {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .key-mechanisms h3 {
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .key-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .key-number {
+            width: 35px;
+            height: 35px;
+            background: #e0e7ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #4338ca;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .key-content {
+            flex: 1;
+        }
+
+        .key-content-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .key-content-text {
+            font-size: 12px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .footer-note {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .footer-note p {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .footer-note strong {
+            color: #1e293b;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid,
+            .mechanism-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Mekanisme Patofisiologi Ko-infeksi Varisela-Zoster Virus dan Tinea Pedis</h1>
+            <p>Interaksi Imunopatologis: Supresi Imun Selular Transien dan Kerentanan terhadap Dermatofitosis</p>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="timeline-section">
+            <div class="timeline-header">
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+                <h2>Linimasa Progresivitas Imunologis</h2>
+            </div>
+            
+            <div class="phase-buttons">
+                <div class="phase-btn active-acute" onclick="setPhase('acute')">
+                    <div class="phase-btn-title">Fase Akut Varisela</div>
+                    <div class="phase-btn-time">0-2 Minggu</div>
+                </div>
+                <div class="phase-btn" onclick="setPhase('peak')">
+                    <div class="phase-btn-title">Fase Puncak Respons Imun</div>
+                    <div class="phase-btn-time">2 Minggu Pasca-infeksi</div>
+                </div>
+                <div class="phase-btn" onclick="setPhase('window')">
+                    <div class="phase-btn-title">Window of Vulnerability</div>
+                    <div class="phase-btn-time">3-6 Minggu Pasca-infeksi</div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Left Panel - Immune Response -->
+                <div class="panel">
+                    <h3>
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                        Dinamika Respons Imun Selular
+                    </h3>
+
+                    <div class="chart-container">
+                        <div class="chart-label">
+                            <span>Sel T CD4+ Spesifik VZV</span>
+                            <span id="trend-icon"></span>
+                        </div>
+                        <div class="chart-graph">
+                            <div class="chart-bars">
+                                <div class="chart-bar" id="bar1"></div>
+                                <div class="chart-bar" id="bar2"></div>
+                                <div class="chart-bar" id="bar3"></div>
+                            </div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>0-2 mgg</span>
+                            <span>~2 mgg</span>
+                            <span>3-6 mgg</span>
+                        </div>
+                    </div>
+
+                    <div class="status-box">
+                        <div class="status-title">Status Fungsional Sel T CD8+</div>
+                        <div class="status-item">
+                            <div class="status-dot green" id="dot1"></div>
+                            <span id="status1">Aktivitas Sitotoksik Antijamur: Normal</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot green" id="dot2"></div>
+                            <span id="status2">Produksi Sitokin Proinflamasi: Adekuat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Clinical Manifestation -->
+                <div class="panel">
+                    <h3>
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        Manifestasi Klinis dan Kerentanan
+                    </h3>
+
+                    <div class="clinical-box">
+                        <div class="clinical-title">Infeksi VZV Akut</div>
+                        <ul class="clinical-list">
+                            <li>Viremia sistemik aktif</li>
+                            <li>Erupsi vesikular generalisata</li>
+                            <li>Supresi imun selular transien</li>
+                        </ul>
+                    </div>
+
+                    <div class="tinea-box" id="tineaBox">
+                        <div class="clinical-title">Status Tinea Pedis</div>
+                        <ul class="clinical-list">
+                            <li>Kolonisasi Trichophyton sp. pre-eksisting</li>
+                            <li id="tinea-symptom">Perburukan gejala pruritus: Stabil</li>
+                            <li id="tinea-growth">Pertumbuhan dermatofita: Terkendali</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-box" id="alertBox">
+                        <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div class="alert-content">
+                            <div class="alert-title">Window of Vulnerability Aktif</div>
+                            <div class="alert-text">Ketidakseimbangan sistem imun menciptakan kondisi permisif untuk reaktivasi dan eksaserbasi infeksi dermatofita</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathophysiology Explanation -->
+        <div class="mechanism-section">
+            <h3>Mekanisme Imunopatologis Ko-infeksi</h3>
+            <div class="mechanism-grid">
+                <div class="mechanism-card blue">
+                    <div class="mechanism-card-title">1. Fase Inisiasi</div>
+                    <div class="mechanism-card-text">
+                        Infeksi VZV akut memicu respons imun adaptif dengan ekspansi klonal sel T CD4+ dan CD8+ spesifik virus. Fase ini ditandai dengan viremia aktif dan mobilisasi masif komponen imunitas selular.
+                    </div>
+                </div>
+                <div class="mechanism-card green">
+                    <div class="mechanism-card-title">2. Fase Puncak Respons</div>
+                    <div class="mechanism-card-text">
+                        Sekitar dua minggu pasca-infeksi, terjadi peningkatan maksimal jumlah sel T CD4+ spesifik VZV, yang berkorelasi dengan kontrol viral load dan resolusi manifestasi klinis akut varisela.
+                    </div>
+                </div>
+                <div class="mechanism-card amber">
+                    <div class="mechanism-card-title">3. Window of Vulnerability</div>
+                    <div class="mechanism-card-text">
+                        Penurunan tajam populasi sel T CD4+ dan supresi fungsi CD8+ dalam 3-6 minggu berikutnya menciptakan periode kerentanan terhadap infeksi sekunder, termasuk eksaserbasi dermatofitosis.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Mechanisms -->
+        <div class="key-mechanisms">
+            <h3>Mekanisme Kunci Perburukan Tinea Pedis</h3>
+            
+            <div class="key-item">
+                <div class="key-number">1</div>
+                <div class="key-content">
+                    <div class="key-content-title">Supresi Imunitas Antijamur</div>
+                    <div class="key-content-text">
+                        Penurunan aktivitas sel T CD4+ dan CD8+ mengurangi produksi sitokin proinflamasi (IFN-γ, TNF-α, IL-17) yang esensial untuk eradikasi dermatofita, serta menurunkan aktivitas sitotoksik langsung terhadap hifa Trichophyton sp.
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-item">
+                <div class="key-number">2</div>
+                <div class="key-content">
+                    <div class="key-content-title">Reaktivasi Infeksi Laten</div>
+                    <div class="key-content-text">
+                        Supresi fungsi CD8+ T-cell akibat infeksi virus memfasilitasi reaktivasi patogen laten dan memperburuk infeksi kronis pre-eksisting, menjelaskan eksaserbasi gejala pruritus pada kaki pasien yang telah ada sebelumnya.
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-item">
+                <div class="key-number">3</div>
+                <div class="key-content">
+                    <div class="key-content-title">Ketidakseimbangan Homeostasis Imun</div>
+                    <div class="key-content-text">
+                        Periode window of vulnerability menciptakan disrupsi pada keseimbangan imunitas mukosa dan kutaneus, memungkinkan proliferasi dermatofita yang tidak terkontrol pada stratum korneum kaki.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="footer-note">
+            <p>
+                <strong>Catatan:</strong> Visualisasi ini menggambarkan dinamika temporal respons imun selular pasca-infeksi VZV dan korelasinya dengan kerentanan terhadap dermatofitosis. Interaksi kompleks antara supresi imun transien dan eksaserbasi tinea pedis menyoroti pentingnya pemahaman imunopatologis dalam manajemen ko-infeksi virus-jamur pada pasien pediatrik.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentPhase = 'acute';
+
+        function setPhase(phase) {
+            currentPhase = phase;
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.phase-btn');
+            buttons.forEach(btn => {
+                btn.className = 'phase-btn';
+            });
+            
+            const activeBtn = buttons[phase === 'acute' ? 0 : phase === 'peak' ? 1 : 2];
+            activeBtn.classList.add('active-' + phase);
+            
+            // Update chart bars
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            
+            bar1.className = 'chart-bar';
+            bar2.className = 'chart-bar';
+            bar3.className = 'chart-bar';
+            
+            if (phase === 'acute') {
+                bar1.classList.add('bar1-active');
+            } else if (phase === 'peak') {
+                bar2.classList.add('bar2-active');
+            } else {
+                bar3.classList.add('bar3-active');
+            }
+            
+            // Update trend icon
+            const trendIcon = document.getElementById('trend-icon');
+            if (phase === 'peak') {
+                trendIcon.innerHTML = '↗️';
+            } else if (phase === 'window') {
+                trendIcon.innerHTML = '↘️';
+            } else {
+                trendIcon.innerHTML = '';
+            }
+            
+            // Update CD8+ status
+            const dot1 = document.getElementById('dot1');
+            const dot2 = document.getElementById('dot2');
+            const status1 = document.getElementById('status1');
+            const status2 = document.getElementById('status2');
+            
+            if (phase === 'window') {
+                dot1.className = 'status-dot red';
+                dot2.className = 'status-dot red';
+                status1.textContent = 'Aktivitas Sitotoksik Antijamur: Tersupresi';
+                status2.textContent = 'Produksi Sitokin Proinflamasi: Menurun';
+            } else {
+                dot1.className = 'status-dot green';
+                dot2.className = 'status-dot green';
+                status1.textContent = 'Aktivitas Sitotoksik Antijamur: Normal';
+                status2.textContent = 'Produksi Sitokin Proinflamasi: Adekuat';
+            }
+            
+            // Update tinea pedis box
+            const tineaBox = document.getElementById('tineaBox');
+            const tineaSymptom = document.getElementById('tinea-symptom');
+            const tineaGrowth = document.getElementById('tinea-growth');
+            
+            if (phase === 'window') {
+                tineaBox.classList.add('warning');
+                tineaSymptom.innerHTML = '<strong style="color: #991b1b;">Perburukan gejala pruritus: Memburuk signifikan</strong>';
+                tineaGrowth.innerHTML = '<strong style="color: #991b1b;">Pertumbuhan dermatofita: Tidak terkontrol</strong>';
+            } else {
+                tineaBox.classList.remove('warning');
+                tineaSymptom.innerHTML = 'Perburukan gejala pruritus: Stabil';
+                tineaGrowth.innerHTML = 'Pertumbuhan dermatofita: Terkendali';
+            }
+            
+            // Update alert box
+            const alertBox = document.getElementById('alertBox');
+            if (phase === 'window') {
+                alertBox.classList.add('show');
+            } else {
+                alertBox.classList.remove('show');
+            }
+        }
+
+        // Initialize with acute phase
+        setPhase('acute');
+    </script>
+</body>
+</html>
